@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '../components/ui/Input';
 import { Badge } from '../components/ui/Badge';
 import { Alert, AlertTitle, AlertDescription } from '../components/ui/Alert';
-import { AlertCircle, CheckCircle2, Info, Plus, Settings, User, CreditCard, LogOut, Keyboard, UserPlus, Mail, MessageSquare, PlusCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Info, Plus, Settings, User, CreditCard, LogOut, Keyboard, UserPlus, Mail, MessageSquare, PlusCircle, Rocket } from 'lucide-react';
 import { Avatar } from '../components/ui/Avatar';
 import { Switch } from '../components/ui/Switch';
 import { Textarea } from '../components/ui/Textarea';
@@ -44,6 +44,24 @@ import { Timeline } from '../components/ui/Timeline';
 import { GlassCard } from '../components/ui/GlassCard';
 import { PhoneMockup } from '../components/ui/PhoneMockup';
 import { GridPattern } from '../components/ui/GridPattern';
+import { BorderBeam } from '../components/ui/BorderBeam';
+import { AnimatedBadge } from '../components/ui/AnimatedBadge';
+import { 
+    AxionAtom, AxionHex, AxionCircuit, AxionPulse, AxionShield, AxionSpark,
+    AxMenu, AxClose, AxChevronDown, AxArrowRight, AxHome, AxSearch, AxPlus, AxTrash,
+    AxCheck, AxAlert, AxInfo, AxError, AxLoader, AxSettings, AxMaximize, AxMinimize, AxPin, AxLogin, AxBookmark,
+    AxUser, AxHeart, AxStar, AxEye, AxDownload, AxCopy,
+    AxSidebar, AxGrid, AxList, AxExternal, AxRefresh, AxLock, AxLogout,
+    AxMail, AxMessage, AxSend, AxBell, AxShare, AxLink, AxThumbsUp, AxPhone, AxVideo, AxCamera, AxMic,
+    AxFile, AxFileText, AxFolder, AxFolderOpen, AxCloud, AxImage, AxFileCode, AxFilePdf, AxArchive,
+    AxCart, AxShoppingBag, AxCreditCard, AxDollar, AxTag, AxGift, AxTrendingUp, AxBarChart, AxPieChart, AxPackage,
+    AxWifi, AxBattery, AxBluetooth, AxVolume, AxBrightness, AxMonitor, AxSmartphone, AxKeyboard, AxDatabase, AxPower,
+    AxCalendar, AxClock, AxTimer, AxHistory, AxSun, AxMoon,
+    AxPlay, AxPause, AxStop, AxSkipForward, AxSkipBack, AxMusic, AxHeadphones,
+    AxMapPin, AxGlobe,
+    AxUsers, AxUserPlus, AxUserMinus, AxUserCheck, AxTeam, AxCrown, AxAward, AxBadgeIcon,
+    AxEdit, AxSave, AxUndo, AxRedo, AxBold, AxItalic, AxQuote, AxFilter, AxSort, AxMoreHorizontal, AxMoreVertical
+} from '../components/ui/Icons';
 
 // Tipos para a estrutura da documentação
 export interface DocPage {
@@ -84,6 +102,7 @@ export const sidebarData: SidebarCategory[] = [
   {
     title: 'Elementos Básicos',
     items: [
+      { label: 'Animated Badge', slug: 'animated-badge' },
       { label: 'Button', slug: 'button' },
       { label: 'Badge', slug: 'badge' },
       { label: 'Avatar', slug: 'avatar' },
@@ -141,11 +160,49 @@ export const sidebarData: SidebarCategory[] = [
   {
       title: 'Efeitos Visuais',
       items: [
+          { label: 'Border Beam', slug: 'border-beam' },
           { label: 'Glass Card', slug: 'glass-card' },
           { label: 'Phone Mockup', slug: 'phone-mockup' },
       ]
+  },
+  {
+      title: 'Mídia & Ícones',
+      items: [
+          { label: 'Axion Icons', slug: 'axion-icons' },
+      ]
   }
 ];
+
+// Strings de Código Fonte Manual
+const animatedBadgeSource = `import React from "react";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
+
+interface AnimatedBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  text: string;
+  icon?: React.ReactNode;
+  className?: string;
+}
+
+export const AnimatedBadge = ({ text, icon, className = "", ...props }: AnimatedBadgeProps) => {
+  return (
+    <div
+      className={\`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-xs font-medium text-gray-300 hover:bg-white/10 transition-colors cursor-pointer group hover:border-purple-500/50 shadow-[0_0_0_1px_rgba(0,0,0,0)] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] \${className}\`}
+      {...props}
+    >
+      <span className="flex items-center justify-center w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 relative overflow-hidden">
+         <motion.div
+           animate={{ rotate: 360 }}
+           transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+           className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"
+         />
+         {icon || <Sparkles className="w-3 h-3 relative z-10" />}
+      </span>
+      <span>{text}</span>
+      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+    </div>
+  );
+};`;
 
 // Conteúdo das páginas (Mapeamento Slug -> Conteúdo)
 export const docPages: Record<string, DocPage> = {
@@ -225,6 +282,24 @@ export const docPages: Record<string, DocPage> = {
   },
 
   // COMPONENTES EXISTENTES
+  'animated-badge': { 
+      title: 'Animated Badge', 
+      description: 'Um badge interativo com brilho e animação de hover.', 
+      type: 'component', 
+      content: (
+        <div className="space-y-4 mt-8">
+            <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-white">Código Fonte Manual</h3>
+                <span className="text-xs text-gray-500">components/ui/AnimatedBadge.tsx</span>
+            </div>
+            <div className="rounded-lg border border-white/10 bg-[#0c0414] p-4 overflow-x-auto relative group">
+                <pre className="text-sm font-mono text-blue-300 whitespace-pre-wrap">
+                    {animatedBadgeSource}
+                </pre>
+            </div>
+        </div>
+      )
+  },
   button: { title: 'Button', description: 'Dispara uma ação ou evento.', type: 'component', content: null },
   badge: { title: 'Badge', description: 'Exibe um status ou uma etiqueta informativa.', type: 'component', content: null },
   card: { title: 'Card', description: 'Um contêiner flexível para agrupar conteúdo.', type: 'component', content: null },
@@ -268,794 +343,355 @@ export const docPages: Record<string, DocPage> = {
   'glass-card': { title: 'Glass Card', description: 'Contêiner com efeito de vidro fosco (glassmorphism).', type: 'component', content: null },
   'phone-mockup': { title: 'Phone Mockup', description: 'Frame de celular CSS-only para exibir screenshots.', type: 'component', content: null },
   'grid-pattern': { title: 'Grid Pattern', description: 'Padrão de fundo em grade animável ou estático.', type: 'component', content: null },
+  'border-beam': { title: 'Border Beam', description: 'Um feixe de luz animado que percorre a borda de um contêiner.', type: 'component', content: null },
+  'axion-icons': { title: 'Axion Icons', description: 'Biblioteca de ícones exclusivos com identidade futurista.', type: 'component', content: null },
 };
 
 // Exemplos de Código
 export const componentExamples: Record<string, { code: string, render: () => React.ReactNode }> = {
-  button: {
-    code: `import { Button } from "axionui"
+  'animated-badge': {
+      code: `<AnimatedBadge text="Novo recurso disponível" />
+<AnimatedBadge text="Launch" icon={<Rocket className="w-3 h-3" />} />`,
+      render: () => (
+          <div className="flex flex-col gap-4 items-center">
+              <AnimatedBadge text="Novo recurso disponível" />
+              <AnimatedBadge text="Launch" icon={<Rocket className="w-3 h-3 text-purple-300 relative z-10" />} />
+          </div>
+      )
+  },
+  'axion-icons': {
+    code: `import { 
+  AxMenu, AxClose, AxHome, AxSearch, 
+  AxCheck, AxAlert, AxLoader, 
+  AxUser, AxHeart, AxStar 
+} from "axionui/icons"
 
-export function ButtonDemo() {
+export function IconsDemo() {
   return (
     <div className="flex gap-4">
-      <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="glow">Glow Effect</Button>
+      <AxHome size={24} />
+      <AxUser size={24} />
+      <AxHeart size={24} className="text-pink-500" />
+      <AxCheck size={24} className="text-green-500" />
     </div>
   )
 }`,
-    render: () => <div className="flex gap-4 flex-wrap justify-center items-center">
-        <Button>Primary</Button>
+    render: () => (
+      <div className="w-full space-y-12">
+        {/* Navigation & Interface */}
+        <div>
+            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">Navigation & Interface</h4>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-8">
+                {[
+                    { icon: AxMenu, label: "Menu" }, { icon: AxClose, label: "Close" },
+                    { icon: AxSidebar, label: "Sidebar" }, { icon: AxGrid, label: "Grid" },
+                    { icon: AxList, label: "List" }, { icon: AxFilter, label: "Filter" },
+                    { icon: AxSort, label: "Sort" }, { icon: AxMaximize, label: "Maximize" },
+                    { icon: AxMinimize, label: "Minimize" }, { icon: AxPin, label: "Pin" },
+                    { icon: AxBookmark, label: "Bookmark" }, { icon: AxLogin, label: "Login" },
+                    { icon: AxLogout, label: "Logout" }, { icon: AxExternal, label: "External" },
+                    { icon: AxRefresh, label: "Refresh" }, { icon: AxLock, label: "Lock" },
+                    { icon: AxHome, label: "Home" }, { icon: AxSearch, label: "Search" },
+                    { icon: AxPlus, label: "Plus" }, { icon: AxTrash, label: "Trash" },
+                    { icon: AxMoreVertical, label: "More Vert" }, { icon: AxMoreHorizontal, label: "More Horiz" },
+                    { icon: AxSettings, label: "Settings" }, { icon: AxLoader, label: "Loader" },
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                            <item.icon size={24} className="text-gray-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-[10px] text-gray-500 truncate w-full text-center">{item.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* Communication */}
+        <div>
+            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">Communication & Social</h4>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-8">
+                {[
+                    { icon: AxMail, label: "Mail" }, { icon: AxMessage, label: "Message" },
+                    { icon: AxSend, label: "Send" }, { icon: AxBell, label: "Bell" },
+                    { icon: AxShare, label: "Share" }, { icon: AxLink, label: "Link" },
+                    { icon: AxThumbsUp, label: "Like" }, { icon: AxPhone, label: "Phone" },
+                    { icon: AxVideo, label: "Video" }, { icon: AxCamera, label: "Camera" },
+                    { icon: AxMic, label: "Mic" },
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                            <item.icon size={24} className="text-gray-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-[10px] text-gray-500 truncate w-full text-center">{item.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* Files & Docs */}
+        <div>
+            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">Files & Documents</h4>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-8">
+                {[
+                    { icon: AxFile, label: "File" }, { icon: AxFileText, label: "Text" },
+                    { icon: AxFolder, label: "Folder" }, { icon: AxFolderOpen, label: "Open" },
+                    { icon: AxImage, label: "Image" }, { icon: AxFileCode, label: "Code" },
+                    { icon: AxFilePdf, label: "PDF" }, { icon: AxArchive, label: "Archive" },
+                    { icon: AxCloud, label: "Cloud" },
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                            <item.icon size={24} className="text-gray-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-[10px] text-gray-500 truncate w-full text-center">{item.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* Editing */}
+        <div>
+            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">Editing & Formatting</h4>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-8">
+                {[
+                    { icon: AxEdit, label: "Edit" }, { icon: AxSave, label: "Save" },
+                    { icon: AxCopy, label: "Copy" }, { icon: AxDownload, label: "Download" },
+                    { icon: AxUndo, label: "Undo" }, { icon: AxRedo, label: "Redo" },
+                    { icon: AxBold, label: "Bold" }, { icon: AxItalic, label: "Italic" },
+                    { icon: AxQuote, label: "Quote" },
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                            <item.icon size={24} className="text-gray-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-[10px] text-gray-500 truncate w-full text-center">{item.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* Commerce */}
+        <div>
+            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">Commerce & Business</h4>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-8">
+                {[
+                    { icon: AxCart, label: "Cart" }, { icon: AxShoppingBag, label: "Bag" },
+                    { icon: AxCreditCard, label: "Card" }, { icon: AxDollar, label: "Dollar" },
+                    { icon: AxTag, label: "Tag" }, { icon: AxGift, label: "Gift" },
+                    { icon: AxTrendingUp, label: "Trend" }, { icon: AxBarChart, label: "Bar" },
+                    { icon: AxPieChart, label: "Pie" }, { icon: AxPackage, label: "Pack" },
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                            <item.icon size={24} className="text-gray-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-[10px] text-gray-500 truncate w-full text-center">{item.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* System */}
+        <div>
+            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">System & Devices</h4>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-8">
+                {[
+                    { icon: AxWifi, label: "Wifi" }, { icon: AxBluetooth, label: "BT" },
+                    { icon: AxBattery, label: "Battery" }, { icon: AxVolume, label: "Volume" },
+                    { icon: AxBrightness, label: "Bright" }, { icon: AxMonitor, label: "PC" },
+                    { icon: AxSmartphone, label: "Phone" }, { icon: AxKeyboard, label: "Keys" },
+                    { icon: AxDatabase, label: "DB" }, { icon: AxPower, label: "Power" },
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                            <item.icon size={24} className="text-gray-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-[10px] text-gray-500 truncate w-full text-center">{item.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* Time & Media */}
+        <div>
+            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">Time, Media & Location</h4>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-8">
+                {[
+                    { icon: AxPlay, label: "Play" }, { icon: AxPause, label: "Pause" },
+                    { icon: AxStop, label: "Stop" }, { icon: AxSkipForward, label: "Next" },
+                    { icon: AxSkipBack, label: "Prev" }, { icon: AxMusic, label: "Music" },
+                    { icon: AxHeadphones, label: "Audio" }, { icon: AxMapPin, label: "Pin" },
+                    { icon: AxGlobe, label: "Globe" }, { icon: AxCalendar, label: "Date" },
+                    { icon: AxClock, label: "Time" }, { icon: AxTimer, label: "Timer" },
+                    { icon: AxHistory, label: "History" }, { icon: AxSun, label: "Sun" },
+                    { icon: AxMoon, label: "Moon" },
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                            <item.icon size={24} className="text-gray-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-[10px] text-gray-500 truncate w-full text-center">{item.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* People */}
+        <div>
+            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">People & Organization</h4>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-8">
+                {[
+                    { icon: AxUsers, label: "Users" }, { icon: AxUserPlus, label: "Add User" },
+                    { icon: AxUserMinus, label: "Rem User" }, { icon: AxUserCheck, label: "Verified" },
+                    { icon: AxTeam, label: "Team" }, { icon: AxUser, label: "Profile" },
+                    { icon: AxHeart, label: "Heart" }, { icon: AxStar, label: "Star" },
+                    { icon: AxCrown, label: "Crown" }, { icon: AxAward, label: "Award" },
+                    { icon: AxBadgeIcon, label: "Badge" }, { icon: AxCheck, label: "Check" },
+                    { icon: AxAlert, label: "Alert" }, { icon: AxInfo, label: "Info" },
+                    { icon: AxError, label: "Error" },
+                ].map((item, i) => (
+                    <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:bg-white/10 transition-colors">
+                            <item.icon size={24} className="text-gray-300 group-hover:text-white" />
+                        </div>
+                        <span className="text-[10px] text-gray-500 truncate w-full text-center">{item.label}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+      </div>
+    )
+  },
+
+  // Basic Elements
+  button: {
+    code: `<Button>Click me</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="glow">Glow</Button>`,
+    render: () => (
+      <div className="flex flex-wrap gap-4">
+        <Button>Click me</Button>
         <Button variant="secondary">Secondary</Button>
+        <Button variant="outline">Outline</Button>
         <Button variant="ghost">Ghost</Button>
         <Button variant="glow">Glow</Button>
-    </div>
-  },
-  'kpi-card': {
-    code: `import { KpiCard } from "axionui"
-
-export function KpiCardDemo() {
-  return (
-    <div className="grid gap-4 w-full max-w-sm">
-      <KpiCard label="Receita Total" value="$45,231.89" change="+20.1% vs mês anterior" trend="up" />
-      <KpiCard label="Taxa de Rejeição" value="12.5%" change="-2.5% vs semana anterior" trend="down" />
-    </div>
-  )
-}`,
-    render: () => (
-      <div className="grid gap-4 w-full max-w-sm">
-        <KpiCard label="Receita Total" value="$45,231.89" change="+20.1% vs mês anterior" trend="up" />
-        <KpiCard label="Taxa de Rejeição" value="12.5%" change="-2.5% vs semana anterior" trend="down" />
       </div>
-    )
-  },
-  'pricing-card': {
-    code: `import { PricingCard } from "axionui"
-
-export function PricingCardDemo() {
-  return (
-    <div className="flex gap-6 flex-wrap justify-center">
-      <PricingCard 
-        title="Pro" 
-        price="$29" 
-        features={['Usuários Ilimitados', '20GB Armazenamento', 'Suporte Prioritário']}
-        isPopular={true}
-      />
-    </div>
-  )
-}`,
-    render: () => (
-      <div className="w-[300px]">
-        <PricingCard 
-          title="Pro" 
-          price="$29" 
-          features={['Usuários Ilimitados', '20GB Armazenamento', 'Suporte Prioritário', 'API Access']}
-          isPopular={true}
-        />
-      </div>
-    )
-  },
-  timeline: {
-    code: `import { Timeline } from "axionui"
-
-const items = [
-  { date: "Q1 2024", title: "Project Kickoff", description: "Initial planning and team assembly.", active: true },
-  { date: "Q2 2024", title: "Design Phase", description: "Mockups and prototyping.", active: false },
-  { date: "Q3 2024", title: "Development", description: "Core features implementation.", active: false },
-]
-
-export function TimelineDemo() {
-  return <Timeline items={items} />
-}`,
-    render: () => (
-      <div className="w-full max-w-md">
-        <Timeline items={[
-          { date: "Q1 2024", title: "Project Kickoff", description: "Initial planning and team assembly.", active: true },
-          { date: "Q2 2024", title: "Design Phase", description: "Mockups and prototyping.", active: false },
-          { date: "Q3 2024", title: "Development", description: "Core features implementation.", active: false },
-        ]} />
-      </div>
-    )
-  },
-  'glass-card': {
-    code: `import { GlassCard } from "axionui"
-
-export function GlassCardDemo() {
-  return (
-    <div className="relative p-10 bg-gradient-to-tr from-purple-500/50 to-blue-500/50 rounded-xl">
-      <GlassCard intensity="high">
-        <h3 className="text-xl font-bold text-white">Glass Effect</h3>
-        <p className="text-gray-200 mt-2">Este conteúdo está flutuando sobre um fundo desfocado.</p>
-      </GlassCard>
-    </div>
-  )
-}`,
-    render: () => (
-      <div className="relative p-12 bg-gradient-to-tr from-purple-600/50 via-pink-600/30 to-blue-600/50 rounded-xl overflow-hidden w-full max-w-md">
-         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-         <GlassCard intensity="high">
-            <h3 className="text-xl font-bold text-white">Glass Effect</h3>
-            <p className="text-gray-200 mt-2">Este conteúdo está flutuando sobre um fundo desfocado.</p>
-         </GlassCard>
-      </div>
-    )
-  },
-  'phone-mockup': {
-    code: `import { PhoneMockup } from "axionui"
-
-export function PhoneMockupDemo() {
-  return (
-    <PhoneMockup>
-      <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-center">
-        <h2 className="text-2xl font-bold text-white">Your App</h2>
-        <p className="text-white/80 mt-2">Looks great on mobile.</p>
-      </div>
-    </PhoneMockup>
-  )
-}`,
-    render: () => (
-      <div className="scale-75 origin-top">
-        <PhoneMockup>
-            <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-center">
-                <div className="w-16 h-16 bg-white/20 rounded-2xl mb-4 backdrop-blur-md"></div>
-                <h2 className="text-2xl font-bold text-white">Your App</h2>
-                <p className="text-white/80 mt-2">Looks great on mobile.</p>
-            </div>
-        </PhoneMockup>
-      </div>
-    )
-  },
-  'grid-pattern': {
-    code: `import { GridPattern } from "axionui"
-
-export function GridPatternDemo() {
-  return (
-    <div className="relative w-full h-[300px] bg-[#0c0414] border border-white/10 rounded-lg overflow-hidden">
-      <GridPattern size={30} strokeColor="rgba(168, 85, 247, 0.2)" />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="bg-black/50 px-4 py-2 rounded text-white backdrop-blur">Background Content</span>
-      </div>
-    </div>
-  )
-}`,
-    render: () => (
-      <div className="relative w-full h-[300px] bg-[#0c0414] border border-white/10 rounded-lg overflow-hidden">
-        <GridPattern size={30} strokeColor="rgba(168, 85, 247, 0.2)" />
-        <div className="absolute inset-0 flex items-center justify-center">
-            <span className="bg-black/50 px-4 py-2 rounded text-white backdrop-blur border border-white/10">Background Content</span>
-        </div>
-      </div>
-    )
-  },
-  'aspect-ratio': {
-    code: `<AspectRatio ratio={16 / 9} className="bg-white/5 rounded-md">
-  <div className="flex items-center justify-center h-full text-gray-400">
-    16:9 Aspect Ratio
-  </div>
-</AspectRatio>`,
-    render: () => (
-      <div className="w-[300px]">
-        <AspectRatio ratio={16 / 9} className="bg-white/5 rounded-md border border-white/10">
-          <div className="flex items-center justify-center h-full text-gray-400">
-            16:9 Aspect Ratio
-          </div>
-        </AspectRatio>
-      </div>
-    )
-  },
-  collapsible: {
-    code: `<Collapsible>
-  <CollapsibleTrigger>Toggle</CollapsibleTrigger>
-  <CollapsibleContent>Content</CollapsibleContent>
-</Collapsible>`,
-    render: () => (
-      <Collapsible className="w-[300px] space-y-2">
-        <div className="flex items-center justify-between space-x-4 px-4">
-          <h4 className="text-sm font-semibold text-white">@peduarte starred 3 repositories</h4>
-          <CollapsibleTrigger className="rounded-md p-1 hover:bg-white/10">
-            <div className="h-4 w-4"><Plus className="h-4 w-4" /></div>
-          </CollapsibleTrigger>
-        </div>
-        <div className="rounded-md border border-white/10 px-4 py-2 font-mono text-sm shadow-sm text-gray-400">
-          @radix-ui/primitives
-        </div>
-        <CollapsibleContent className="space-y-2">
-          <div className="rounded-md border border-white/10 px-4 py-2 font-mono text-sm shadow-sm text-gray-400">
-            @radix-ui/colors
-          </div>
-          <div className="rounded-md border border-white/10 px-4 py-2 font-mono text-sm shadow-sm text-gray-400">
-            @stitches/react
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-    )
-  },
-  'hover-card': {
-    code: `<HoverCard>
-  <HoverCardTrigger>Hover me</HoverCardTrigger>
-  <HoverCardContent>Content</HoverCardContent>
-</HoverCard>`,
-    render: () => (
-      <HoverCard>
-        <HoverCardTrigger>
-            <Button variant="outline">Hover me</Button>
-        </HoverCardTrigger>
-        <HoverCardContent>
-            <div className="flex justify-between space-x-4">
-                <Avatar fallback="VC" />
-                <div className="space-y-1">
-                    <h4 className="text-sm font-semibold text-white">@nextjs</h4>
-                    <p className="text-sm text-gray-400">The React Framework – created and maintained by @vercel.</p>
-                </div>
-            </div>
-        </HoverCardContent>
-      </HoverCard>
-    )
-  },
-  toggle: {
-    code: `<Toggle aria-label="Toggle italic">
-  <Bold className="h-4 w-4" />
-</Toggle>`,
-    render: () => (
-      <Toggle aria-label="Toggle italic">
-        <div className="h-4 w-4 font-bold text-center">B</div>
-      </Toggle>
-    )
-  },
-  'toggle-group': {
-    code: `<ToggleGroup type="single">
-  <ToggleGroupItem value="a">A</ToggleGroupItem>
-  <ToggleGroupItem value="b">B</ToggleGroupItem>
-</ToggleGroup>`,
-    render: () => (
-      <ToggleGroup type="single">
-        <ToggleGroupItem value="bold" aria-label="Toggle bold">
-            <div className="h-4 w-4 font-bold text-center">B</div>
-        </ToggleGroupItem>
-        <ToggleGroupItem value="italic" aria-label="Toggle italic">
-            <div className="h-4 w-4 italic text-center">I</div>
-        </ToggleGroupItem>
-        <ToggleGroupItem value="underline" aria-label="Toggle underline">
-            <div className="h-4 w-4 underline text-center">U</div>
-        </ToggleGroupItem>
-      </ToggleGroup>
-    )
-  },
-  'dropdown-menu': {
-    code: `<DropdownMenu>
-  <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-  <DropdownMenuContent>
-    <DropdownMenuItem>Profile</DropdownMenuItem>
-    <DropdownMenuItem>Billing</DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>`,
-    render: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-            <Button variant="outline">Open Menu</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    )
-  },
-  'context-menu': {
-    code: `<ContextMenu>
-  <ContextMenuTrigger>Right click here</ContextMenuTrigger>
-  <ContextMenuContent>
-    <ContextMenuItem>Profile</ContextMenuItem>
-  </ContextMenuContent>
-</ContextMenu>`,
-    render: () => (
-      <ContextMenu>
-        <ContextMenuTrigger>
-            <div className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed border-white/20 text-sm text-gray-400">
-                Right click here
-            </div>
-        </ContextMenuTrigger>
-        <ContextMenuContent>
-            <ContextMenuItem>Back</ContextMenuItem>
-            <ContextMenuItem>Forward</ContextMenuItem>
-            <ContextMenuItem>Reload</ContextMenuItem>
-            <div className="h-[1px] bg-white/10 my-1" />
-            <ContextMenuItem>Save As...</ContextMenuItem>
-        </ContextMenuContent>
-      </ContextMenu>
-    )
-  },
-  menubar: {
-    code: `<Menubar>
-  <MenubarMenu>
-    <MenubarTrigger>File</MenubarTrigger>
-    <MenubarContent>
-      <MenubarItem>New Tab</MenubarItem>
-    </MenubarContent>
-  </MenubarMenu>
-</Menubar>`,
-    render: () => (
-      <Menubar>
-        <MenubarMenu>
-            <MenubarTrigger>File</MenubarTrigger>
-            <MenubarContent>
-                <MenubarItem>New Tab</MenubarItem>
-                <MenubarItem>New Window</MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem>Share</MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem>Print</MenubarItem>
-            </MenubarContent>
-        </MenubarMenu>
-        <MenubarMenu>
-            <MenubarTrigger>Edit</MenubarTrigger>
-            <MenubarContent>
-                <MenubarItem>Undo</MenubarItem>
-                <MenubarItem>Redo</MenubarItem>
-            </MenubarContent>
-        </MenubarMenu>
-      </Menubar>
-    )
-  },
-  'navigation-menu': {
-    code: `<NavigationMenu>
-  <NavigationMenuItem title="Getting started">
-    <NavigationMenuLink href="/docs">Introduction</NavigationMenuLink>
-  </NavigationMenuItem>
-</NavigationMenu>`,
-    render: () => (
-      <NavigationMenu>
-        <NavigationMenuItem title="Getting started">
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                <li className="row-span-3">
-                    <NavigationMenuLink href="/" title="AxionUI">
-                        <div className="mb-2 mt-4 text-lg font-medium text-white">
-                        AxionUI
-                        </div>
-                        <p className="text-sm leading-tight text-gray-400">
-                        Beautifully designed components built with Radix UI and Tailwind CSS.
-                        </p>
-                    </NavigationMenuLink>
-                </li>
-                <li><NavigationMenuLink href="/docs" title="Introduction">Re-usable components.</NavigationMenuLink></li>
-                <li><NavigationMenuLink href="/docs/installation" title="Installation">How to install dependencies.</NavigationMenuLink></li>
-                <li><NavigationMenuLink href="/docs/theming" title="Theming">How to customize.</NavigationMenuLink></li>
-            </ul>
-        </NavigationMenuItem>
-        <NavigationMenuItem title="Components">
-             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                <li><NavigationMenuLink href="/docs/alert" title="Alert">Displays a callout for user attention.</NavigationMenuLink></li>
-                <li><NavigationMenuLink href="/docs/hover-card" title="Hover Card">For sighted users to preview content.</NavigationMenuLink></li>
-                <li><NavigationMenuLink href="/docs/progress" title="Progress">Displays an indicator showing completion.</NavigationMenuLink></li>
-                <li><NavigationMenuLink href="/docs/scroll-area" title="Scroll-area">Visually or semantically separates content.</NavigationMenuLink></li>
-             </ul>
-        </NavigationMenuItem>
-      </NavigationMenu>
-    )
-  },
-  command: {
-    code: `<Command>
-  <CommandInput placeholder="Type a command..." />
-  <CommandList>
-    <CommandEmpty>No results found.</CommandEmpty>
-    <CommandGroup heading="Suggestions">
-      <CommandItem>Calendar</CommandItem>
-    </CommandGroup>
-  </CommandList>
-</Command>`,
-    render: () => (
-      <Command className="rounded-lg border border-white/10 shadow-md md:min-w-[450px]">
-        <CommandInput placeholder="Type a command or search..." />
-        <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup heading="Suggestions">
-                <CommandItem>Calendar</CommandItem>
-                <CommandItem>Search Emoji</CommandItem>
-                <CommandItem>Calculator</CommandItem>
-            </CommandGroup>
-            <CommandGroup heading="Settings">
-                <CommandItem>Profile</CommandItem>
-                <CommandItem>Billing</CommandItem>
-                <CommandItem>Settings</CommandItem>
-            </CommandGroup>
-        </CommandList>
-      </Command>
-    )
-  },
-  card: {
-    code: `<Card className="w-[350px]">
-  <CardHeader>
-    <CardTitle>Create project</CardTitle>
-    <CardDescription>Deploy your new project in one-click.</CardDescription>
-  </CardHeader>
-  <CardContent>
-    ...
-  </CardContent>
-  <CardFooter>
-    ...
-  </CardFooter>
-</Card>`,
-    render: () => (
-      <Card className="w-[350px]">
-        <CardHeader>
-          <CardTitle>Create project</CardTitle>
-          <CardDescription>Deploy your new project in one-click.</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <div className="flex flex-col space-y-4">
-                <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Name of your project" />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="framework">Framework</Label>
-                    <Select id="framework">
-                        <option value="next">Next.js</option>
-                        <option value="svelte">SvelteKit</option>
-                        <option value="astro">Astro</option>
-                    </Select>
-                </div>
-            </div>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="ghost">Cancel</Button>
-          <Button>Deploy</Button>
-        </CardFooter>
-      </Card>
-    )
-  },
-  input: {
-    code: `<Input type="email" placeholder="Email" />`,
-    render: () => (
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="email">Email</Label>
-            <Input type="email" id="email" placeholder="Email" />
-        </div>
     )
   },
   badge: {
-    code: `<Badge>Badge</Badge>`,
-    render: () => <div className="flex gap-2"><Badge>Default</Badge><Badge variant="secondary">Secondary</Badge><Badge variant="destructive">Destructive</Badge><Badge variant="outline">Outline</Badge></div>
+    code: `<Badge>Default</Badge>
+<Badge variant="secondary">Secondary</Badge>
+<Badge variant="outline">Outline</Badge>
+<Badge variant="destructive">Destructive</Badge>
+<Badge variant="success">Success</Badge>`,
+    render: () => (
+      <div className="flex gap-2">
+        <Badge>Default</Badge>
+        <Badge variant="secondary">Secondary</Badge>
+        <Badge variant="outline">Outline</Badge>
+        <Badge variant="destructive">Destructive</Badge>
+        <Badge variant="success">Success</Badge>
+      </div>
+    )
+  },
+  avatar: {
+      code: `<Avatar fallback="JD" />
+<Avatar src="https://github.com/shadcn.png" alt="@shadcn" />`,
+      render: () => (
+          <div className="flex gap-4">
+              <Avatar fallback="JD" />
+              <Avatar src="https://github.com/shadcn.png" alt="@shadcn" />
+          </div>
+      )
   },
   skeleton: {
-    code: `<Skeleton className="w-[100px] h-[20px] rounded-full" />`,
-    render: () => (
+      code: `<div className="flex items-center space-x-4">
+  <Skeleton className="h-12 w-12 rounded-full" />
+  <div className="space-y-2">
+    <Skeleton className="h-4 w-[250px]" />
+    <Skeleton className="h-4 w-[200px]" />
+  </div>
+</div>`,
+      render: () => (
         <div className="flex items-center space-x-4">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="space-y-2">
-                <Skeleton className="h-4 w-[250px]" />
-                <Skeleton className="h-4 w-[200px]" />
-            </div>
+          <Skeleton className="h-12 w-12 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
         </div>
-    )
+      )
   },
-  table: {
-    code: `<Table>
-  <TableHeader>
-    <TableRow>
-      <TableHead>Invoice</TableHead>
-      <TableHead>Status</TableHead>
-      <TableHead>Method</TableHead>
-      <TableHead className="text-right">Amount</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    <TableRow>
-      <TableCell>INV001</TableCell>
-      <TableCell>Paid</TableCell>
-      <TableCell>Credit Card</TableCell>
-      <TableCell className="text-right">$250.00</TableCell>
-    </TableRow>
-  </TableBody>
-</Table>`,
-    render: () => (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead className="w-[100px]">Invoice</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Method</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {[
-                    { invoice: "INV001", status: "Paid", method: "Credit Card", amount: "$250.00" },
-                    { invoice: "INV002", status: "Pending", method: "PayPal", amount: "$150.00" },
-                    { invoice: "INV003", status: "Unpaid", method: "Bank Transfer", amount: "$350.00" },
-                ].map((invoice) => (
-                    <TableRow key={invoice.invoice}>
-                        <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                        <TableCell>{invoice.status}</TableCell>
-                        <TableCell>{invoice.method}</TableCell>
-                        <TableCell className="text-right">{invoice.amount}</TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-    )
+  toggle: {
+      code: `<Toggle aria-label="Toggle italic">
+  <AxBold className="h-4 w-4" />
+</Toggle>`,
+      render: () => (
+          <Toggle aria-label="Toggle italic">
+            <AxBold className="h-4 w-4" />
+          </Toggle>
+      )
   },
-  'scroll-area': {
-    code: `<ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
-  Jokester began sneaking into the castle in the middle of the night...
-</ScrollArea>`,
-    render: () => (
-        <ScrollArea className="h-[200px] w-[350px] rounded-md border border-white/10 p-4">
-            <div className="text-sm text-gray-400">
-                Jokester began sneaking into the castle in the middle of the night and leaving
-                jokes all over the place: under the king's pillow, in his soup, even in the
-                royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-                then, one day, the people of the kingdom discovered that the jokes were
-                actually funny, and they started laughing. And then they started laughing at
-                the king.
-            </div>
-        </ScrollArea>
-    )
+  'toggle-group': {
+      code: `<ToggleGroup type="multiple">
+  <ToggleGroupItem value="bold" aria-label="Toggle bold">
+    <AxBold className="h-4 w-4" />
+  </ToggleGroupItem>
+  <ToggleGroupItem value="italic" aria-label="Toggle italic">
+    <AxItalic className="h-4 w-4" />
+  </ToggleGroupItem>
+  <ToggleGroupItem value="underline" aria-label="Toggle underline">
+    <div className="underline">U</div>
+  </ToggleGroupItem>
+</ToggleGroup>`,
+      render: () => (
+        <ToggleGroup type="multiple">
+          <ToggleGroupItem value="bold" aria-label="Toggle bold">
+            <AxBold className="h-4 w-4" />
+          </ToggleGroupItem>
+          <ToggleGroupItem value="italic" aria-label="Toggle italic">
+            <AxItalic className="h-4 w-4" />
+          </ToggleGroupItem>
+          <ToggleGroupItem value="underline" aria-label="Toggle underline">
+            <div className="underline font-bold text-sm h-4 w-4 flex items-center justify-center">U</div>
+          </ToggleGroupItem>
+        </ToggleGroup>
+      )
   },
-  alert: {
-    code: `<Alert>
-  <AlertTitle>Heads up!</AlertTitle>
-  <AlertDescription>
-    You can add components to your app using the cli.
-  </AlertDescription>
-</Alert>`,
-    render: () => (
-        <Alert>
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Heads up!</AlertTitle>
-            <AlertDescription>
-                You can add components to your app using the cli.
-            </AlertDescription>
-        </Alert>
-    )
+
+  // Form Elements
+  input: {
+      code: `<Input type="email" placeholder="Email" />`,
+      render: () => <div className="max-w-sm"><Input type="email" placeholder="Email" /></div>
   },
-  progress: {
-    code: `<Progress value={33} />`,
-    render: () => <Progress value={33} className="w-[60%]" />
+  textarea: {
+      code: `<Textarea placeholder="Type your message here." />`,
+      render: () => <div className="max-w-sm"><Textarea placeholder="Type your message here." /></div>
   },
-  tabs: {
-    code: `<Tabs defaultValue="account">
-  <TabsList>
-    <TabsTrigger value="account">Account</TabsTrigger>
-    <TabsTrigger value="password">Password</TabsTrigger>
-  </TabsList>
-  <TabsContent value="account">Make changes to your account here.</TabsContent>
-  <TabsContent value="password">Change your password here.</TabsContent>
-</Tabs>`,
-    render: () => (
-        <Tabs defaultValue="account" className="w-[400px]">
-            <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="account">Account</TabsTrigger>
-                <TabsTrigger value="password">Password</TabsTrigger>
-            </TabsList>
-            <TabsContent value="account">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Account</CardTitle>
-                        <CardDescription>
-                            Make changes to your account here. Click save when you're done.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                        <div className="space-y-1">
-                            <Label htmlFor="name">Name</Label>
-                            <Input id="name" defaultValue="Pedro Duarte" />
-                        </div>
-                        <div className="space-y-1">
-                            <Label htmlFor="username">Username</Label>
-                            <Input id="username" defaultValue="@peduarte" />
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <Button>Save changes</Button>
-                    </CardFooter>
-                </Card>
-            </TabsContent>
-            <TabsContent value="password">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Password</CardTitle>
-                        <CardDescription>
-                            Change your password here. After saving, you'll be logged out.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                        <div className="space-y-1">
-                            <Label htmlFor="current">Current password</Label>
-                            <Input id="current" type="password" />
-                        </div>
-                        <div className="space-y-1">
-                            <Label htmlFor="new">New password</Label>
-                            <Input id="new" type="password" />
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <Button>Save password</Button>
-                    </CardFooter>
-                </Card>
-            </TabsContent>
-        </Tabs>
-    )
+  select: {
+      code: `<Select>
+  <option value="light">Light</option>
+  <option value="dark">Dark</option>
+  <option value="system">System</option>
+</Select>`,
+      render: () => (
+          <div className="max-w-sm">
+            <Select>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="system">System</option>
+            </Select>
+          </div>
+      )
   },
-  accordion: {
-    code: `<Accordion>
-  <AccordionItem value="item-1">
-    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-    <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
-  </AccordionItem>
-</Accordion>`,
-    render: () => (
-        <Accordion className="w-[400px]">
-            <AccordionItem value="item-1">
-                <AccordionTrigger>Is it accessible?</AccordionTrigger>
-                <AccordionContent>
-                    Yes. It adheres to the WAI-ARIA design pattern.
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-                <AccordionTrigger>Is it styled?</AccordionTrigger>
-                <AccordionContent>
-                    Yes. It comes with default styles that matches the other components&apos; aesthetic.
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-                <AccordionTrigger>Is it animated?</AccordionTrigger>
-                <AccordionContent>
-                    Yes. It&apos;s animated by default, but you can disable it if you prefer.
-                </AccordionContent>
-            </AccordionItem>
-        </Accordion>
-    )
-  },
-  sheet: {
-    code: `<Sheet>
-  <SheetTrigger>Open</SheetTrigger>
-  <SheetContent>
-    <SheetHeader>
-      <SheetTitle>Edit profile</SheetTitle>
-      <SheetDescription>Make changes to your profile here.</SheetDescription>
-    </SheetHeader>
-  </SheetContent>
-</Sheet>`,
-    render: () => (
-        <Sheet>
-            <SheetTrigger>
-                <Button variant="outline">Open Sheet</Button>
-            </SheetTrigger>
-            <SheetContent>
-                <SheetHeader>
-                    <SheetTitle>Edit profile</SheetTitle>
-                    <SheetDescription>
-                        Make changes to your profile here. Click save when you're done.
-                    </SheetDescription>
-                </SheetHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">Name</Label>
-                        <Input id="name" value="Pedro Duarte" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="username" className="text-right">Username</Label>
-                        <Input id="username" value="@peduarte" className="col-span-3" />
-                    </div>
-                </div>
-                <SheetFooter>
-                    <Button type="submit">Save changes</Button>
-                </SheetFooter>
-            </SheetContent>
-        </Sheet>
-    )
-  },
-  dialog: {
-    code: `<Dialog>
-  <DialogTrigger>Open</DialogTrigger>
-  <DialogContent>
-    <DialogHeader>
-      <DialogTitle>Edit profile</DialogTitle>
-      <DialogDescription>Make changes to your profile here.</DialogDescription>
-    </DialogHeader>
-  </DialogContent>
-</Dialog>`,
-    render: () => (
-        <Dialog>
-            <DialogTrigger>
-                <Button variant="outline">Open Dialog</Button>
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Edit profile</DialogTitle>
-                    <DialogDescription>
-                        Make changes to your profile here. Click save when you're done.
-                    </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">Name</Label>
-                        <Input id="name" value="Pedro Duarte" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="username" className="text-right">Username</Label>
-                        <Input id="username" value="@peduarte" className="col-span-3" />
-                    </div>
-                </div>
-                <DialogFooter>
-                    <Button type="submit">Save changes</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    )
-  },
-  popover: {
-    code: `<Popover>
-  <PopoverTrigger>Open</PopoverTrigger>
-  <PopoverContent>Place content for the popover here.</PopoverContent>
-</Popover>`,
-    render: () => (
-        <Popover>
-            <PopoverTrigger>
-                <Button variant="outline">Open Popover</Button>
-            </PopoverTrigger>
-            <PopoverContent>
-                <div className="grid gap-4">
-                    <div className="space-y-2">
-                        <h4 className="font-medium leading-none text-white">Dimensions</h4>
-                        <p className="text-sm text-gray-400">Set the dimensions for the layer.</p>
-                    </div>
-                    <div className="grid gap-2">
-                        <div className="grid grid-cols-3 items-center gap-4">
-                            <Label htmlFor="width">Width</Label>
-                            <Input id="width" defaultValue="100%" className="col-span-2 h-8" />
-                        </div>
-                        <div className="grid grid-cols-3 items-center gap-4">
-                            <Label htmlFor="maxWidth">Max. width</Label>
-                            <Input id="maxWidth" defaultValue="300px" className="col-span-2 h-8" />
-                        </div>
-                    </div>
-                </div>
-            </PopoverContent>
-        </Popover>
-    )
-  },
-  slider: {
-    code: `<Slider defaultValue={[50]} max={100} step={1} />`,
-    render: () => <Slider value={[50]} max={100} step={1} className="w-[60%]" />
-  },
-  breadcrumb: {
-    code: `<Breadcrumb>
-  <BreadcrumbList>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/">Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbPage>Components</BreadcrumbPage>
-    </BreadcrumbItem>
-  </BreadcrumbList>
-</Breadcrumb>`,
-    render: () => (
-        <Breadcrumb>
-            <BreadcrumbList>
-                <BreadcrumbItem>
-                    <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                    <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                    <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-                </BreadcrumbItem>
-            </BreadcrumbList>
-        </Breadcrumb>
-    )
+  checkbox: {
+      code: `<Checkbox id="terms" label="Accept terms and conditions" />`,
+      render: () => <Checkbox id="terms" label="Accept terms and conditions" />
   },
   'radio-group': {
-    code: `<RadioGroup defaultValue="option-one">
+      code: `<RadioGroup defaultValue="option-one">
   <div className="flex items-center space-x-2">
     <RadioGroupItem value="option-one" id="option-one" />
     <Label htmlFor="option-one">Option One</Label>
@@ -1065,76 +701,762 @@ export function GridPatternDemo() {
     <Label htmlFor="option-two">Option Two</Label>
   </div>
 </RadioGroup>`,
-    render: () => (
+      render: () => (
         <RadioGroup defaultValue="option-one">
-            <div className="flex items-center space-x-2">
-                <RadioGroupItem value="option-one" id="option-one" />
-                <Label htmlFor="option-one">Option One</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-                <RadioGroupItem value="option-two" id="option-two" />
-                <Label htmlFor="option-two">Option Two</Label>
-            </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="option-one" id="option-one" />
+            <Label htmlFor="option-one">Option One</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="option-two" id="option-two" />
+            <Label htmlFor="option-two">Option Two</Label>
+          </div>
         </RadioGroup>
-    )
-  },
-  label: {
-    code: `<Label htmlFor="email">Your email address</Label>`,
-    render: () => (
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="email-2">Email</Label>
-            <Input type="email" id="email-2" placeholder="Email" />
-        </div>
-    )
+      )
   },
   switch: {
-    code: `<Switch />`,
-    render: () => (
+      code: `<div className="flex items-center space-x-2">
+  <Switch id="airplane-mode" />
+  <Label htmlFor="airplane-mode">Airplane Mode</Label>
+</div>`,
+      render: () => (
         <div className="flex items-center space-x-2">
-            <Switch id="airplane-mode" />
-            <Label htmlFor="airplane-mode">Airplane Mode</Label>
+          <Switch id="airplane-mode" />
+          <Label htmlFor="airplane-mode">Airplane Mode</Label>
         </div>
-    )
+      )
   },
-  checkbox: {
-    code: `<Checkbox />`,
-    render: () => (
-        <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
-            <Label htmlFor="terms">Accept terms and conditions</Label>
+  slider: {
+      code: `<Slider defaultValue={[50]} max={100} step={1} />`,
+      render: () => <div className="w-[60%]"><Slider value={[50]} max={100} step={1} /></div>
+  },
+  label: {
+      code: `<div className="grid w-full max-w-sm items-center gap-1.5">
+  <Label htmlFor="email">Email</Label>
+  <Input type="email" id="email" placeholder="Email" />
+</div>`,
+      render: () => (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email-label-demo">Email</Label>
+          <Input type="email" id="email-label-demo" placeholder="Email" />
         </div>
-    )
+      )
   },
-  select: {
-    code: `<Select>
-  <option value="light">Light</option>
-  <option value="dark">Dark</option>
-  <option value="system">System</option>
-</Select>`,
-    render: () => (
-        <Select>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="system">System</option>
-        </Select>
-    )
+  command: {
+      code: `<Command>
+  <CommandInput placeholder="Type a command..." />
+  <CommandList>
+    <CommandEmpty>No results found.</CommandEmpty>
+    <CommandGroup heading="Suggestions">
+      <CommandItem>Calendar</CommandItem>
+      <CommandItem>Search Emoji</CommandItem>
+      <CommandItem>Calculator</CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>`,
+      render: () => (
+        <div className="max-w-[450px]">
+            <Command>
+            <CommandInput placeholder="Type a command..." />
+            <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup heading="Suggestions">
+                <CommandItem>Calendar</CommandItem>
+                <CommandItem>Search Emoji</CommandItem>
+                <CommandItem>Calculator</CommandItem>
+                </CommandGroup>
+            </CommandList>
+            </Command>
+        </div>
+      )
   },
-  textarea: {
-    code: `<Textarea placeholder="Type your message here." />`,
-    render: () => <Textarea placeholder="Type your message here." />
+
+  // Layout
+  card: {
+      code: `<Card className="w-[350px]">
+  <CardHeader>
+    <CardTitle>Create project</CardTitle>
+    <CardDescription>Deploy your new project in one-click.</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <form>
+      <div className="grid w-full items-center gap-4">
+        <div className="flex flex-col space-y-1.5">
+          <Label htmlFor="name">Name</Label>
+          <Input id="name" placeholder="Name of your project" />
+        </div>
+      </div>
+    </form>
+  </CardContent>
+  <CardFooter className="flex justify-between">
+    <Button variant="outline">Cancel</Button>
+    <Button>Deploy</Button>
+  </CardFooter>
+</Card>`,
+      render: () => (
+        <Card className="w-[350px]">
+          <CardHeader>
+            <CardTitle>Create project</CardTitle>
+            <CardDescription>Deploy your new project in one-click.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form>
+              <div className="grid w-full items-center gap-4">
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="name">Name</Label>
+                  <Input id="name" placeholder="Name of your project" />
+                </div>
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button variant="outline">Cancel</Button>
+            <Button>Deploy</Button>
+          </CardFooter>
+        </Card>
+      )
   },
-  avatar: {
-    code: `<Avatar src="https://github.com/shadcn.png" alt="@shadcn" />`,
-    render: () => <Avatar src="https://github.com/shadcn.png" alt="@shadcn" fallback="CN" />
+  accordion: {
+      code: `<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+  </AccordionItem>
+</Accordion>`,
+      render: () => (
+        <Accordion className="w-full max-w-[400px]">
+            <AccordionItem value="item-1">
+                <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+                <AccordionTrigger>Is it styled?</AccordionTrigger>
+                <AccordionContent>Yes. It comes with default styles that matches the other components.</AccordionContent>
+            </AccordionItem>
+        </Accordion>
+      )
+  },
+  'aspect-ratio': {
+      code: `<div className="w-[450px]">
+  <AspectRatio ratio={16 / 9}>
+    <img src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd" alt="Image" className="rounded-md object-cover" />
+  </AspectRatio>
+</div>`,
+      render: () => (
+        <div className="w-[300px] md:w-[450px]">
+          <AspectRatio ratio={16 / 9}>
+            <img src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&q=80" alt="Image" className="rounded-md object-cover" />
+          </AspectRatio>
+        </div>
+      )
+  },
+  collapsible: {
+      code: `<Collapsible>
+  <CollapsibleTrigger>Can I use this in my project?</CollapsibleTrigger>
+  <CollapsibleContent>Yes. Free to use for personal and commercial projects.</CollapsibleContent>
+</Collapsible>`,
+      render: () => (
+          <Collapsible className="w-[350px] space-y-2">
+            <div className="flex items-center justify-between space-x-4 px-4 py-2 border border-white/10 rounded-md">
+                <h4 className="text-sm font-semibold text-white">
+                    @peduarte starred 3 repositories
+                </h4>
+                <CollapsibleTrigger className="p-2 rounded-md hover:bg-white/10">
+                    <AxMoreVertical className="h-4 w-4" />
+                    <span className="sr-only">Toggle</span>
+                </CollapsibleTrigger>
+            </div>
+            <div className="rounded-md border border-white/10 px-4 py-3 font-mono text-sm text-gray-400">
+                @radix-ui/primitives
+            </div>
+            <CollapsibleContent className="space-y-2">
+                <div className="rounded-md border border-white/10 px-4 py-3 font-mono text-sm text-gray-400">
+                    @radix-ui/colors
+                </div>
+                <div className="rounded-md border border-white/10 px-4 py-3 font-mono text-sm text-gray-400">
+                    @stitches/react
+                </div>
+            </CollapsibleContent>
+          </Collapsible>
+      )
+  },
+  'scroll-area': {
+      code: `<ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+  Jokester began sneaking into the castle in the middle of the night...
+</ScrollArea>`,
+      render: () => (
+        <ScrollArea className="h-[200px] w-[350px] rounded-md border border-white/10 p-4">
+            <h4 className="mb-4 text-sm font-medium leading-none text-white">Tags</h4>
+            {Array.from({ length: 50 }).map((_, i, a) => (
+            <div key={i} className="text-sm text-gray-400">
+                v1.2.0-beta.{a.length - i}
+                <div className="my-2 border-b border-white/5" />
+            </div>
+            ))}
+        </ScrollArea>
+      )
+  },
+  
+  // Navigation
+  breadcrumb: {
+      code: `<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>`,
+      render: () => (
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      )
+  },
+  'dropdown-menu': {
+      code: `<DropdownMenu>
+  <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem>Profile</DropdownMenuItem>
+    <DropdownMenuItem>Billing</DropdownMenuItem>
+    <DropdownMenuItem>Team</DropdownMenuItem>
+    <DropdownMenuItem>Subscription</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`,
+      render: () => (
+        <DropdownMenu>
+            <DropdownMenuTrigger>
+                <Button variant="outline">Open Menu</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+      )
+  },
+  menubar: {
+      code: `<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarContent>
+      <MenubarItem>New Tab</MenubarItem>
+      <MenubarItem>New Window</MenubarItem>
+      <MenubarSeparator />
+      <MenubarItem>Share</MenubarItem>
+      <MenubarSeparator />
+      <MenubarItem>Print</MenubarItem>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>`,
+      render: () => (
+        <Menubar>
+            <MenubarMenu>
+                <MenubarTrigger>File</MenubarTrigger>
+                <MenubarContent>
+                    <MenubarItem>New Tab</MenubarItem>
+                    <MenubarItem>New Window</MenubarItem>
+                    <MenubarSeparator />
+                    <MenubarItem>Share</MenubarItem>
+                    <MenubarSeparator />
+                    <MenubarItem>Print</MenubarItem>
+                </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+                <MenubarTrigger>Edit</MenubarTrigger>
+                <MenubarContent>
+                    <MenubarItem>Undo</MenubarItem>
+                    <MenubarItem>Redo</MenubarItem>
+                </MenubarContent>
+            </MenubarMenu>
+        </Menubar>
+      )
+  },
+  'navigation-menu': {
+      code: `<NavigationMenu>
+  <NavigationMenuItem title="Getting Started">
+    <NavigationMenuLink href="#" title="Introduction">
+      Re-usable components built using Radix UI and Tailwind CSS.
+    </NavigationMenuLink>
+    <NavigationMenuLink href="#" title="Installation">
+      How to install dependencies and structure your app.
+    </NavigationMenuLink>
+  </NavigationMenuItem>
+  <NavigationMenuItem title="Components">
+    <div className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+       ...
+    </div>
+  </NavigationMenuItem>
+</NavigationMenu>`,
+      render: () => (
+        <NavigationMenu>
+            <NavigationMenuItem title="Getting Started">
+                <NavigationMenuLink href="#" title="Introduction">
+                Re-usable components built using Radix UI and Tailwind CSS.
+                </NavigationMenuLink>
+                <NavigationMenuLink href="#" title="Installation">
+                How to install dependencies and structure your app.
+                </NavigationMenuLink>
+                <NavigationMenuLink href="#" title="Typography">
+                Styles for headings, paragraphs, lists...
+                </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem title="Components">
+                <NavigationMenuLink href="#" title="Alert Dialog">
+                    A modal dialog that interrupts the user.
+                </NavigationMenuLink>
+                <NavigationMenuLink href="#" title="Hover Card">
+                    For sighted users to preview content available behind a link.
+                </NavigationMenuLink>
+            </NavigationMenuItem>
+        </NavigationMenu>
+      )
+  },
+  tabs: {
+      code: `<Tabs defaultValue="account" className="w-[400px]">
+  <TabsList>
+    <TabsTrigger value="account">Account</TabsTrigger>
+    <TabsTrigger value="password">Password</TabsTrigger>
+  </TabsList>
+  <TabsContent value="account">Make changes to your account here.</TabsContent>
+  <TabsContent value="password">Change your password here.</TabsContent>
+</Tabs>`,
+      render: () => (
+        <Tabs defaultValue="account" className="w-[400px]">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="account">Account</TabsTrigger>
+            <TabsTrigger value="password">Password</TabsTrigger>
+          </TabsList>
+          <TabsContent value="account">
+            <Card>
+              <CardHeader>
+                <CardTitle>Account</CardTitle>
+                <CardDescription>
+                  Make changes to your account here. Click save when you're done.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <Label htmlFor="name">Name</Label>
+                  <Input id="name" defaultValue="Pedro Duarte" />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="username">Username</Label>
+                  <Input id="username" defaultValue="@peduarte" />
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button>Save changes</Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+          <TabsContent value="password">
+            <Card>
+              <CardHeader>
+                <CardTitle>Password</CardTitle>
+                <CardDescription>
+                  Change your password here. After saving, you'll be logged out.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <Label htmlFor="current">Current password</Label>
+                  <Input id="current" type="password" />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="new">New password</Label>
+                  <Input id="new" type="password" />
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button>Save password</Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      )
+  },
+
+  // Overlays
+  dialog: {
+      code: `<Dialog>
+  <DialogTrigger>Open</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Are you sure?</DialogTitle>
+      <DialogDescription>
+        This action cannot be undone.
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>`,
+      render: () => (
+        <Dialog>
+          <DialogTrigger>
+            <Button variant="outline">Edit Profile</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Edit profile</DialogTitle>
+              <DialogDescription>
+                Make changes to your profile here. Click save when you're done.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">Name</Label>
+                <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="username" className="text-right">Username</Label>
+                <Input id="username" defaultValue="@peduarte" className="col-span-3" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )
+  },
+  sheet: {
+      code: `<Sheet>
+  <SheetTrigger>Open</SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Are you sure?</SheetTitle>
+      <SheetDescription>
+        This action cannot be undone.
+      </SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet>`,
+      render: () => (
+        <Sheet>
+          <SheetTrigger>
+            <Button variant="outline">Open Sheet</Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Edit profile</SheetTitle>
+              <SheetDescription>
+                Make changes to your profile here. Click save when you're done.
+              </SheetDescription>
+            </SheetHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">Name</Label>
+                <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="username" className="text-right">Username</Label>
+                <Input id="username" defaultValue="@peduarte" className="col-span-3" />
+              </div>
+            </div>
+            <SheetFooter>
+              <Button type="submit">Save changes</Button>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
+      )
+  },
+  popover: {
+      code: `<Popover>
+  <PopoverTrigger>Open</PopoverTrigger>
+  <PopoverContent>Place content for the popover here.</PopoverContent>
+</Popover>`,
+      render: () => (
+        <Popover>
+          <PopoverTrigger>
+             <Button variant="outline">Open Popover</Button>
+          </PopoverTrigger>
+          <PopoverContent>
+             <div className="grid gap-4">
+                <div className="space-y-2">
+                    <h4 className="font-medium leading-none text-white">Dimensions</h4>
+                    <p className="text-sm text-gray-400">Set the dimensions for the layer.</p>
+                </div>
+                <div className="grid gap-2">
+                    <div className="grid grid-cols-3 items-center gap-4">
+                        <Label htmlFor="width">Width</Label>
+                        <Input id="width" defaultValue="100%" className="col-span-2 h-8" />
+                    </div>
+                    <div className="grid grid-cols-3 items-center gap-4">
+                        <Label htmlFor="maxWidth">Max. width</Label>
+                        <Input id="maxWidth" defaultValue="300px" className="col-span-2 h-8" />
+                    </div>
+                </div>
+             </div>
+          </PopoverContent>
+        </Popover>
+      )
+  },
+  'hover-card': {
+      code: `<HoverCard>
+  <HoverCardTrigger>Hover</HoverCardTrigger>
+  <HoverCardContent>
+    The React Framework – created and maintained by @vercel.
+  </HoverCardContent>
+</HoverCard>`,
+      render: () => (
+        <HoverCard>
+            <HoverCardTrigger>
+                <Button variant="ghost">@nextjs</Button>
+            </HoverCardTrigger>
+            <HoverCardContent>
+                <div className="flex justify-between space-x-4">
+                    <Avatar fallback="VC" />
+                    <div className="space-y-1">
+                        <h4 className="text-sm font-semibold text-white">@nextjs</h4>
+                        <p className="text-sm text-gray-400">
+                            The React Framework – created and maintained by @vercel.
+                        </p>
+                        <div className="flex items-center pt-2">
+                            <span className="text-xs text-gray-500">Joined December 2021</span>
+                        </div>
+                    </div>
+                </div>
+            </HoverCardContent>
+        </HoverCard>
+      )
+  },
+  'context-menu': {
+      code: `<ContextMenu>
+  <ContextMenuTrigger>Right click here</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem>Profile</ContextMenuItem>
+    <ContextMenuItem>Billing</ContextMenuItem>
+    <ContextMenuItem>Team</ContextMenuItem>
+    <ContextMenuItem>Subscription</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>`,
+      render: () => (
+          <ContextMenu>
+            <ContextMenuTrigger>
+                <div className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed border-white/20 text-sm text-gray-400">
+                    Right click here
+                </div>
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+                <ContextMenuItem>Back</ContextMenuItem>
+                <ContextMenuItem>Forward</ContextMenuItem>
+                <ContextMenuItem>Reload</ContextMenuItem>
+                <div className="h-[1px] bg-white/10 my-1" />
+                <ContextMenuItem>Save As...</ContextMenuItem>
+                <ContextMenuItem>Print...</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
+      )
   },
   tooltip: {
-    code: `<Tooltip content="Add to library">
-  <Button variant="outline">Hover</Button>
+      code: `<Tooltip content="Add to library">
+  <Button variant="outline">Hover me</Button>
 </Tooltip>`,
-    render: () => (
+      render: () => (
         <Tooltip content="Add to library">
-            <Button variant="outline">Hover</Button>
+          <Button variant="outline">Hover me</Button>
         </Tooltip>
-    )
+      )
+  },
+
+  // Feedback & Data
+  alert: {
+      code: `<Alert>
+  <AlertTitle>Heads up!</AlertTitle>
+  <AlertDescription>
+    You can add components to your app using the cli.
+  </AlertDescription>
+</Alert>`,
+      render: () => (
+        <Alert>
+          <Info className="h-4 w-4" />
+          <AlertTitle>Heads up!</AlertTitle>
+          <AlertDescription>
+            You can add components to your app using the cli.
+          </AlertDescription>
+        </Alert>
+      )
+  },
+  progress: {
+      code: `<Progress value={33} />`,
+      render: () => <div className="w-[60%]"><Progress value={33} /></div>
+  },
+  table: {
+      code: `<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[100px]">Invoice</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead>Method</TableHead>
+      <TableHead className="text-right">Amount</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">INV-001</TableCell>
+      <TableCell>Paid</TableCell>
+      <TableCell>Credit Card</TableCell>
+      <TableCell className="text-right">$250.00</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`,
+      render: () => (
+        <Table>
+            <TableHeader>
+                <TableRow>
+                <TableHead className="w-[100px]">Invoice</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Method</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {[
+                    { invoice: "INV-001", status: "Paid", method: "Credit Card", amount: "$250.00" },
+                    { invoice: "INV-002", status: "Pending", method: "PayPal", amount: "$150.00" },
+                    { invoice: "INV-003", status: "Unpaid", method: "Bank Transfer", amount: "$350.00" },
+                ].map((invoice) => (
+                    <TableRow key={invoice.invoice}>
+                    <TableCell className="font-medium">{invoice.invoice}</TableCell>
+                    <TableCell>{invoice.status}</TableCell>
+                    <TableCell>{invoice.method}</TableCell>
+                    <TableCell className="text-right">{invoice.amount}</TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+      )
+  },
+
+  // New Components
+  'kpi-card': {
+      code: `<KpiCard 
+  label="Total Revenue" 
+  value="$45,231.89" 
+  change="+20.1%" 
+  trend="up" 
+/>`,
+      render: () => (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <KpiCard label="Total Revenue" value="$45,231.89" change="+20.1%" trend="up" />
+            <KpiCard label="Subscriptions" value="+2350" change="+180.1%" trend="up" />
+          </div>
+      )
+  },
+  'pricing-card': {
+      code: `<PricingCard
+  title="Pro"
+  price="$29"
+  features={['Unlimited projects', 'Analytics', '24/7 Support']}
+  isPopular={true}
+/>`,
+      render: () => (
+          <div className="max-w-sm">
+            <PricingCard
+                title="Pro"
+                price="$29"
+                features={['Unlimited projects', 'Advanced Analytics', '24/7 Priority Support', 'Custom Domain']}
+                isPopular={true}
+            />
+          </div>
+      )
+  },
+  timeline: {
+      code: `<Timeline items={[
+  { date: 'Aug 2024', title: 'v2.0 Release', description: 'Major update with new features.' },
+  { date: 'July 2024', title: 'Beta Testing', description: 'Closed beta for selected users.' },
+]} />`,
+      render: () => (
+          <Timeline items={[
+            { date: 'Aug 2024', title: 'v2.0 Release', description: 'Major update with new features and improved performance.', active: true },
+            { date: 'July 2024', title: 'Beta Testing', description: 'Closed beta for selected users to test stability.' },
+            { date: 'May 2024', title: 'Concept', description: 'Initial design and prototyping phase.' },
+          ]} />
+      )
+  },
+  'glass-card': {
+      code: `<GlassCard intensity="high">
+  <h3 className="text-xl font-bold text-white">Glassmorphism</h3>
+  <p className="text-gray-300">Blurry background effect.</p>
+</GlassCard>`,
+      render: () => (
+          <div className="relative w-full h-[300px] flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&q=80')] bg-cover rounded-xl overflow-hidden">
+             <GlassCard intensity="high" className="max-w-xs text-center">
+                <h3 className="text-xl font-bold text-white mb-2">Glassmorphism</h3>
+                <p className="text-gray-200 text-sm">A modern UI trend that uses background blur to create a frosted glass effect.</p>
+             </GlassCard>
+          </div>
+      )
+  },
+  'phone-mockup': {
+      code: `<PhoneMockup>
+  <div className="h-full w-full bg-white p-4">
+    App Content
+  </div>
+</PhoneMockup>`,
+      render: () => (
+          <div className="scale-75 origin-top">
+            <PhoneMockup>
+                <div className="h-full w-full bg-[#0c0414] p-6 text-white flex flex-col items-center justify-center">
+                    <div className="w-16 h-16 bg-purple-600 rounded-2xl mb-4"></div>
+                    <h3 className="text-2xl font-bold">Axion App</h3>
+                </div>
+            </PhoneMockup>
+          </div>
+      )
+  },
+  'grid-pattern': {
+      code: `<div className="relative h-[200px] w-full overflow-hidden bg-black">
+  <GridPattern size={30} />
+</div>`,
+      render: () => (
+        <div className="relative h-[300px] w-full overflow-hidden bg-[#0c0414] rounded-lg border border-white/10">
+          <GridPattern size={40} />
+          <div className="absolute inset-0 flex items-center justify-center">
+             <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Grid Background</h3>
+          </div>
+        </div>
+      )
+  },
+  'border-beam': {
+      code: `<div className="relative h-48 w-full max-w-sm rounded-xl overflow-hidden bg-[#0c0414]">
+  <BorderBeam size={300} duration={10} />
+  <div className="absolute inset-[1px] rounded-[11px] bg-[#130d1d] flex items-center justify-center">
+    <span className="text-white font-bold">Border Beam</span>
+  </div>
+</div>`,
+      render: () => (
+        <div className="relative h-48 w-full max-w-sm rounded-xl overflow-hidden bg-[#0c0414] shadow-xl">
+            <BorderBeam size={400} duration={8} />
+            <div className="absolute inset-[1px] rounded-[11px] bg-[#130d1d] flex items-center justify-center z-10">
+                <span className="text-white font-bold">Border Beam</span>
+            </div>
+        </div>
+      )
   },
 };

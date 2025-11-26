@@ -90,8 +90,8 @@ export const Docs = () => {
 
           {/* Content Rendering */}
           <div className="space-y-8">
-            {activePage.type === 'guide' && activePage.content}
-
+            
+            {/* Se for componente, mostra o Preview/Usage */}
             {activePage.type === 'component' && example && (
                 <>
                     <ComponentViewer 
@@ -108,6 +108,13 @@ export const Docs = () => {
                         </div>
                     </div>
                 </>
+            )}
+
+            {/* Renderiza conteúdo adicional (Guias ou Código Fonte Manual de Componentes) */}
+            {activePage.content && (
+                <div className="pt-4">
+                    {activePage.content}
+                </div>
             )}
           </div>
           

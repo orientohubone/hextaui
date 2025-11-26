@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from './ui/Button';
 import { Copy, Check, Info, AlertCircle, CheckCircle2, User, Moon, Sun } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BorderBeam } from './ui/BorderBeam';
 
 // Definição dos componentes disponíveis no playground
 const components = {
@@ -221,13 +222,14 @@ export const ComponentPlayground = () => {
           {/* Preview Area */}
           <div className="lg:col-span-8 relative group">
             
-            {/* Rotating Beam Container */}
-            <div className="relative rounded-3xl p-[1px] overflow-hidden h-[600px] shadow-2xl shadow-purple-900/20">
-                {/* Animated Gradient Background (The Beam) */}
-                <div className="absolute inset-[-50%] animate-spin-slow bg-[conic-gradient(from_90deg_at_50%_50%,#0000_0%,#0000_50%,#d8b4fe_100%)] opacity-70" />
+            {/* Container with Border Beam */}
+            <div className="relative rounded-3xl overflow-hidden h-[600px] shadow-2xl shadow-purple-900/20 bg-[#0c0414] border border-white/5">
                 
-                {/* Inner Content (Masks the center of gradient) */}
-                <div className="rounded-[23px] bg-[#130d1d] h-full w-full relative z-10 flex flex-col overflow-hidden border border-purple-400/30">
+                {/* 1. The Moving Light (Background) - Large size to cover diagonal */}
+                <BorderBeam size={1200} duration={8} delay={0} colorFrom="#d8b4fe" colorTo="#8b5cf6" />
+                
+                {/* 2. The Content (Foreground) - Has margin to reveal 1px of background */}
+                <div className="absolute inset-[1px] rounded-[23px] bg-[#130d1d] flex flex-col overflow-hidden z-10">
                     
                     {/* Toolbar */}
                     <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#1c1528]/80 backdrop-blur-sm relative z-20">
