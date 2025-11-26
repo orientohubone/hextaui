@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Menu, X, Hexagon } from 'lucide-react';
+import { Github, Menu, X, Atom } from 'lucide-react';
 import { Button } from './ui/Button';
 
 interface NavbarProps {
@@ -26,10 +26,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
             onClick={() => onNavigate('home')}
           >
             <div className="relative">
-               <Hexagon className="w-8 h-8 text-purple-500 fill-purple-500/20 group-hover:fill-purple-500/40 transition-all" />
+               <Atom className="w-8 h-8 text-purple-500 stroke-[1.5] group-hover:stroke-purple-400 transition-colors animate-spin-slow" style={{ animationDuration: '10s' }} />
                <div className="absolute inset-0 bg-purple-500 blur-lg opacity-20 group-hover:opacity-40 transition-opacity" />
             </div>
-            <span className="font-bold text-lg tracking-tight">Hexta<span className="text-purple-400">UI</span></span>
+            <span className="font-bold text-lg tracking-tight">Axion<span className="text-purple-400">UI</span></span>
           </div>
 
           {/* Desktop Links */}

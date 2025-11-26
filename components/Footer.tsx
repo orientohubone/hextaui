@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Hexagon, Twitter, Github, Disc } from 'lucide-react';
+import { Atom, Twitter, Github, Disc } from 'lucide-react';
 
 export const Footer = () => {
   return (
@@ -8,8 +9,8 @@ export const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
              <div className="flex items-center gap-2 mb-4">
-               <Hexagon className="w-6 h-6 text-purple-500 fill-purple-500/20" />
-               <span className="font-bold text-lg">HextaUI</span>
+               <Atom className="w-6 h-6 text-purple-500" />
+               <span className="font-bold text-lg">AxionUI</span>
              </div>
              <p className="text-gray-500 text-sm mb-4">
                Construindo o futuro das interfaces web com componentes potencializados por IA.
@@ -49,7 +50,7 @@ export const Footer = () => {
         </div>
         
         <div className="border-t border-white/5 pt-8 text-center text-sm text-gray-600">
-          © {new Date().getFullYear()} HextaAI Inc. Todos os direitos reservados.
+          © {new Date().getFullYear()} AxionAI Inc. Todos os direitos reservados.
         </div>
       </div>
     </footer>
